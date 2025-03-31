@@ -1,8 +1,4 @@
-# Welcome to your Expo app 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
-## Get started
+## How to Run the App
 
 1. Install dependencies
 
@@ -25,26 +21,41 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+## Info
+```
+.
+└── app/
+    ├── index.tsx
+    ├── _layout.tsx
+    ├── components/
+    │   ├── home.tsx
+    │   ├── map.tsx
+    │   └── ...
+    ├── state/
+    │   └── App.tsx
+    ├── types/
+    │   ├── app_types.ts
+    │   └── ...
+    └── util/
+        ├── general.ts
+        └── ...
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **index.tsx**: The `Index()` function is the first thing react native loads.
+Right now, it just sets up the updater. Shouldn't need to be messed with much
+if at all. 
+- **layout.tsx**: We don't need to worry about this. That's where the 'index'
+header thing is coming from. I'll disable it soon or y'all can--just look
+up how to. 
+- **componenents/**: These are simply all the screens and composite elements (like a nav bar or something) that will be used in the app. 
+- **state/**: This contains the app class and nothing more. This class
+is basically just a state machine that keeps track of which screen the user is on. It's also used by components to update the screen. Basically every method/attribute is static except the actual screen map and render function. 
+Whenever you add a new screen, add it to the map in the constructor (and add
+the new type in the enum in `./app/types/app_types.ts`). 
+- **types/**: Just an organized area to keep defined types for typescript. 
+- **util/**: Mostly for general purpose methods. The only one there is 
+`isNullish(x)` right now which just returns whether the parameter is equal
+to null or undefined (`x == null || x == undefined`).
+\
+\
+And that's it! The *to-do list* and general *resources on react native* are in `app/index.tsx`, and the maps module documentation link is in `app/components/map.tsx`. I'll probably move those here soon. 
