@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, View, Dimensions, Image } from 'react-native';
 import App from '../state/App';
 import MapView, { Marker } from 'react-native-maps';
+import BCycle_Map from './map_element';
 
 /**
  * Map module docs: https://www.npmjs.com/package/react-native-maps
@@ -19,10 +20,6 @@ export default class MapScreen extends Component {
             flex: 1,
             maxHeight: 50,
             backgroundColor: "white"
-        },
-        map: {
-            width: "100%",
-            height: this.screenHeight - 125
         },
         header_image: {
             flex: 1,
@@ -52,29 +49,13 @@ export default class MapScreen extends Component {
         App.refresh();
     }
     render() { 
-        console.log(fetch('https://portal.bcycle.com/1/subscriptiontypes'))
         return (
             <View style={this.styles.container}>                
                 <View style={this.styles.header}>                
-                    <Image style={this.styles.header_image} source={require('../../assets/our_images/logo.png')} />
+                    <Image style={this.styles.header_image} source={require('../../assets/images/bcycle_logo.png')} />
                 </View>
-                <MapView style={this.styles.map} 
-                    initialRegion={{
-                        latitude: 40.00421094247513,
-                        longitude: -105.26386911357382,
-                        latitudeDelta: 0.005,
-                        longitudeDelta: 0.005,
-                    }}
-                ><Marker
-                    coordinate={{
-                        latitude: 40.00421094247513,
-                        longitude: -105.26386911357382
-                    }}
-                    title="Station 1"
-                    description="Initial test place"
-                    icon={require('../../assets/our_images/bcycle_marker_1.png')}
-                    /></MapView>
-                <Image style={this.styles.navbar_image} source={require('../../assets/our_images/navbar.png')} />
+                <BCycle_Map />
+                <Image style={this.styles.navbar_image} source={require('../../assets/images/bcycle_navbar.png')} />
             </View>
         )
     }

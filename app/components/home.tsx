@@ -39,7 +39,6 @@ export default class HomeScreen extends Component {
             <TouchableOpacity
                 style={this.styles.button}
                 onPress={() => this.test()}
-                title='Begin Demo'
             ><Text>Test</Text></TouchableOpacity>
             </View>  
             )
