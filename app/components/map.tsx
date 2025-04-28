@@ -10,38 +10,38 @@ import BCycle_Map from './map_element';
 
 export default class MapScreen extends Component {
     constructor(props: {}) { super(props) }
-    private get screenHeight() { return Dimensions.get("screen").height - 75 }
+    private get screenHeight() { return Dimensions.get("screen").height }
     private get screenWidth() { return Dimensions.get("screen").width }
     private readonly styles = StyleSheet.create({
         container: {
-            flex: 1
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
         },
         header: {
-            flex: 1,
-            maxHeight: 50,
+            height: 50,
             backgroundColor: "white"
         },
         header_image: {
             flex: 1,
             width: null,
             height: null,
-            maxHeight: 50,
             resizeMode: 'contain'
+        },
+        map_container: {
+            height: this.screenHeight - 200,
+            backgroundColor: "red"
+        },
+        navbar_container: {
+            height: 75,
+            backgroundColor: "white"
         },
         navbar_image: {
             flex: 1,
             width: null,
             height: null,
             resizeMode: 'contain'
-        },
-        image: {
-            flex: 1,
-            width: null,
-            height: null,
-            maxHeight: 50,
-            resizeMode: 'contain'
         }
-
     });
 
     test() {
@@ -54,8 +54,12 @@ export default class MapScreen extends Component {
                 <View style={this.styles.header}>                
                     <Image style={this.styles.header_image} source={require('../../assets/images/bcycle_logo.png')} />
                 </View>
-                <BCycle_Map />
-                <Image style={this.styles.navbar_image} source={require('../../assets/images/bcycle_navbar.png')} />
+                <View style={this.styles.map_container}>
+                    <BCycle_Map />
+                </View>
+                <View style={this.styles.navbar_container}>
+                    <Image style={this.styles.navbar_image} source={require('../../assets/images/bcycle_navbar.png')} />
+                </View>
             </View>
         )
     }

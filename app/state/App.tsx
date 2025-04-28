@@ -2,6 +2,7 @@ import { Component } from "react";
 import HomeScreen from "../components/home";
 import MapScreen from "../components/map";
 import { State } from "../types/app_types";
+import { BCycle_Station } from "../components/map_element";
 
 
 export default class App {
@@ -23,6 +24,27 @@ export default class App {
     constructor() { 
         this.screens.set(State.HOME, new HomeScreen({}));
         this.screens.set(State.MAP, new MapScreen({}));
+        BCycle_Station.station_list_ref = new Map();
+        BCycle_Station.station_list_ref.set(0, new BCycle_Station(
+                'Broadway and Baseline', 10, 5, 0, 40.00037682435091, -105.26252643013333,
+                'description')
+            );
+            BCycle_Station.station_list_ref.set(1, new BCycle_Station(
+                'Timber Ridge', 2, 5, 1, 40.005709156797764, -105.25487049885186,
+                'description')
+            );
+            BCycle_Station.station_list_ref.set(2, new BCycle_Station(
+                'Center for Community', 15, 7, 2, 40.00432756784085, -105.26380275753245,
+                'description')
+            );
+            BCycle_Station.station_list_ref.set(3, new BCycle_Station(
+                'Williams Village', 0, 17, 3, 39.99925184532494, -105.25278058646582,
+                'description')
+            );
+            BCycle_Station.station_list_ref.set(4, new BCycle_Station(
+                'Stearns East', 9, 0, 4, 39.998795904251516, -105.25091821152749,
+                'description')
+            );
     }
 
     /**
