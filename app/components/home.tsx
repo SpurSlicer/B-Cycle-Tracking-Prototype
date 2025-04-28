@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import App from '../state/App';
 
 /**
@@ -9,7 +9,20 @@ import App from '../state/App';
 
 export default class HomeScreen extends Component {
     constructor(props: {}) { super(props) }
-
+    private readonly styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+        },
+        button: {
+            width: 300,
+            height: 75,
+            backgroundColor: "red",
+            justifyContent: "center",
+            alignItems: "center"
+        }
+    });
     /**
      * This just switches the state and refreshes the app.
      */
@@ -21,18 +34,13 @@ export default class HomeScreen extends Component {
     render() { 
         return (
             <View
-                style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                }}
+                style={this.styles.container}
             >
-            <Button
-                color={'red'}
+            <TouchableOpacity
+                style={this.styles.button}
                 onPress={() => this.test()}
-                title='Test maps'
-            />
-            <Text>Testing testing 123</Text>
+                title='Begin Demo'
+            ><Text>Test</Text></TouchableOpacity>
             </View>  
             )
     }

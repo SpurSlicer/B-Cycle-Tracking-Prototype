@@ -3,7 +3,10 @@ import App from "./state/App";
 import { State } from "./types/app_types";
 
 export default function RootLayout() {
-  return <Stack>
+  return <Stack
+        screenOptions={{
+          headerShown: false
+        }}>
       <Stack.Screen name={State[App.getState]} />
     </Stack>;
 }
