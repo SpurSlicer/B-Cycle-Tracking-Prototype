@@ -176,6 +176,11 @@ const tray_styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 300,
     },
+    small_bold: {
+        paddingTop: 5,
+        fontSize: 12,
+        fontWeight: 700,
+    },
     image_list: {
         width: "40%",
         height: "auto",
@@ -432,7 +437,7 @@ export class BCycle_Station {
                 </View>
                 <View key={1} style={tray_styles.image_container}>
                     <Image key={0} source={require('../../assets/images/bcycle_travel_icon.png')} />
-                    <Text key={1} style={tray_styles.small}>{`${this.distance} miles`}</Text>
+                    <Text key={1} style={tray_styles.small_bold}>{`${this.distance} mi`}</Text>
                 </View>
             </TouchableOpacity>
         )
