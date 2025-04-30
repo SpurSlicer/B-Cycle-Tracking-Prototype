@@ -1,7 +1,7 @@
 import { Component } from "react";
 import HomeScreen from "../components/home";
 import MapScreen from "../components/map";
-import { State } from "../types/app_types";
+import { PopupState, State } from "../types/app_types";
 import { BCycle_Station } from "../components/map_element";
 
 
@@ -11,7 +11,8 @@ export default class App {
         private static refreshFunction = (update: boolean) => { };
         public static setRefreshFunction(fun: (update: boolean) => void) { App.refreshFunction = fun; }
         public static refresh = () => { 
-            console.log(`App updating to ${State[App.getState]} with val ${App.getState} and update ${App.update}`);
+            
+            console.log(`[LOG] [STATE_MACHINE]: ${PopupState[BCycle_Station.popup_state]}`)
             App.update = !App.update;
             App.refreshFunction(App.update);
         };

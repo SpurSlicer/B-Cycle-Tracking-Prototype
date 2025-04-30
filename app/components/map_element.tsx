@@ -5,6 +5,7 @@ import MapView, { LatLng, Marker, Polyline } from 'react-native-maps';
 import { isNullish } from '../util/general';
 import { BikeState, PopupState } from '../types/app_types';
 
+
 const bcycle_blue = '#04a2eb';
 const bcycle_gray = '#d9d9d9';
 const bcycle_dark_Gray = '#b6b6b6';
@@ -122,7 +123,8 @@ const tray_styles = StyleSheet.create({
     text_line_container: {
         display: "flex",
         flexDirection: "row",
-        alignContent: "center"
+        alignContent: "center",
+        alignItems: "center"
     },
     header: {
         fontSize: 25,
@@ -172,7 +174,7 @@ const tray_styles = StyleSheet.create({
     },
     small: {
         fontSize: 12,
-        fontWeight: 800,
+        fontWeight: 300,
     },
     image_list: {
         width: "40%",
@@ -201,6 +203,15 @@ const tray_styles = StyleSheet.create({
         height: 50,
         width: 50,
         margin: 7,
+    },
+    bike_image_number: {
+        textAlign: "center",
+        height: 50,
+        width: 50,
+        fontSize: 28,
+        marginTop: -45,
+        marginLeft: -1,
+        fontWeight: 700
     },
     horizontal_spacer: {
         backgroundColor: bcycle_dark_Gray,
@@ -289,7 +300,26 @@ const tray_styles = StyleSheet.create({
         width: 25,
         height: 25,
         resizeMode: "stretch"
-    }
+    },
+    bike_image_container_small: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
+        height: 25,
+        width: 25,
+        margin: 3.5,
+    },
+    bike_image_number_small: {
+        textAlign: "center",
+        height: 25,
+        width: 25,
+        fontSize: 14,
+        marginTop: -22.5,
+        marginLeft: -0.75,
+        fontWeight: 700
+    },
 });
 
 class BCycle_Bike {
@@ -345,7 +375,6 @@ export class BCycle_Station {
     public static popup_state: (PopupState) = PopupState.CHOOSE_MARKER;
     public get getMarker(): React.JSX.Element {
         const num_available_bikes = this.getNumAvailableBikes();
-        console.log(`BIKE STUFF: ${this.latitude},  ${this.longitude}`);
         return (<Marker
                     key={this.station_id}
                     coordinate={{
@@ -362,12 +391,12 @@ export class BCycle_Station {
                                 BCycle_Station.popup_state = PopupState.CHOOSE_STATION;
                                 BCycle_Station.selected_station = this.station_id;
                             }
-                            console.log(`Station "${this.name}" of id ${this.station_id} was pressed. Click status: ${BCycle_Station.selected_station}`);
+                            console.log(`[LOG] [BCycle_Station] [getMarker] Station "${this.name}" of id ${this.station_id} was pressed. Click status: ${BCycle_Station.selected_station}`);
                             App.refresh();
                         }
                     }
                     title={this.name}
-                    description={this.description}
+                    // description={this.description}
                     icon={marker_icons.get(num_available_bikes)}
             />);
     };
@@ -385,7 +414,7 @@ export class BCycle_Station {
                 key={this.station_id} 
                 style={tray_styles.outer_container}
                 onPress={() => {
-                    console.log(`Station named ${this.name} of id ${this.station_id} was pressed`);
+                    console.log(`[LOG] [BCycle_Station] [getPopup] Station named ${this.name} of id ${this.station_id} was pressed`);
                     BCycle_Station.popup_state = PopupState.CHOOSE_BIKE;
                     BCycle_Station.destination_station = this.station_id;
                     App.refresh();
@@ -455,23 +484,24 @@ export class BCycle_Station {
             else 
                 return require('../../assets/images/bcycle_low_charged.png');
         }
-}
+    }
 
 
     public getBikeSelectionPopup(bike_number: number) {
         const image = this.getDockImage(bike_number);
+        const number_str = (bike_number < 10) ? `0${bike_number}` : String(bike_number)
         return (
             <TouchableOpacity 
                 key={bike_number} 
                 style={tray_styles.bike_image_container}
                 onPress={() => {
                     if (this.bikes.get(bike_number)?.bike_state == BikeState.ABSENT) return;
-                    console.log(`Bike ${bike_number} was pressed`);
                     BCycle_Station.popup_state = PopupState.CHECKOUT;
                     BCycle_Station.unlocked_bike = bike_number;
                     App.refresh();
             }}>
                 <Image key={0} source={image} />
+                <Text style={tray_styles.bike_image_number}>{number_str}</Text>
             </TouchableOpacity>
         )
     }
@@ -550,6 +580,7 @@ export class BCycle_Station {
     public get getCheckoutPopup() {
         this.estimated_ride_time = Math.floor((Math.random() * 10) + 1);
         const charge: number = this.bikes.get(BCycle_Station.unlocked_bike as number)?.charge as number;
+        const number_str = (BCycle_Station.unlocked_bike as number < 10) ? `0${BCycle_Station.unlocked_bike}` : String(BCycle_Station.unlocked_bike)
         return (<View style={tray_styles.popup_container_small}>
             <View key={0} style={tray_styles.estimated_ride_time_container}>
                 <Text style={tray_styles.estimated_ride_time_text}>
@@ -559,7 +590,10 @@ export class BCycle_Station {
             <Text key={1} style={tray_styles.header}>{this.name}</Text>
             <View key={2} style={tray_styles.text_line_container}>
                 <Text key={0} style={tray_styles.normal}>{`Unlocking bike `}</Text>
-                <Image style={tray_styles.small_image} key={1} source={this.getDockImage(BCycle_Station.unlocked_bike as number)} />
+                <View style={tray_styles.bike_image_container_small}>
+                    <Image style={tray_styles.small_image} key={1} source={this.getDockImage(BCycle_Station.unlocked_bike as number)} />
+                    <Text style={tray_styles.bike_image_number_small}>{number_str}</Text>
+                </View>
                 <Text key={2} style={tray_styles.normal}>{` of battery `}</Text>
                 <Text key={3} style={this.getBatteryStyle(charge)}>{`${charge}%`}</Text>
             </View>
@@ -622,7 +656,7 @@ export class BCycle_Station {
         for (let i = 1; i <= rand_bike_count; i++) {
             const new_bike = new BCycle_Bike(i, (Math.floor(Math.random() * BCycle_Bike.length)));
             this.bikes.set(i, new_bike);
-            console.log(`SET BIKE ${new_bike.bike_number} with charge ${new_bike.charge} in state ${BikeState[new_bike.bike_state]}`);
+            console.log(`\tSET BIKE ${new_bike.bike_number} with charge ${new_bike.charge} in state ${BikeState[new_bike.bike_state]}`);
         }
     }
 }
@@ -680,7 +714,6 @@ export default class BCycle_Map extends Component {
     });
 
     private get getPopupMenu() {
-        console.log(`STATE: ${BCycle_Station.popup_state}`);
         switch (BCycle_Station.popup_state) {
             case PopupState.CHOOSE_MARKER:
                 return <></>;
@@ -697,7 +730,6 @@ export default class BCycle_Map extends Component {
         }
     }
     private get getMapStyle() {
-        console.log(`At state ${BCycle_Station.popup_state}`)
         switch (BCycle_Station.popup_state) {
             case PopupState.CHOOSE_MARKER:
                 return this.styles.map;
