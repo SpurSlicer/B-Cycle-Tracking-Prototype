@@ -16,7 +16,7 @@ export default class MapScreen extends Component {
         container: {
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-around",
+            justifyContent: "center",
         },
         header: {
             height: 50,
@@ -29,7 +29,7 @@ export default class MapScreen extends Component {
             resizeMode: 'contain'
         },
         map_container: {
-            height: this.screenHeight - 200,
+            height: this.screenHeight - 190,
             backgroundColor: "red"
         },
         navbar_container: {

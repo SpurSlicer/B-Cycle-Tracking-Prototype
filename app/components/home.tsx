@@ -18,9 +18,16 @@ export default class HomeScreen extends Component {
         button: {
             width: 300,
             height: 75,
-            backgroundColor: "red",
+            backgroundColor: "black",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            borderRadius: 20
+        },
+        button_text: {
+            color: "white",
+            fontSize: 40,
+            fontWeight: 900,
+            fontFamily: "Hellvetica"
         }
     });
     /**
@@ -39,7 +46,7 @@ export default class HomeScreen extends Component {
             <TouchableOpacity
                 style={this.styles.button}
                 onPress={() => this.test()}
-            ><Text>Test</Text></TouchableOpacity>
+            ><Text style={this.styles.button_text}>Begin Demo</Text></TouchableOpacity>
             </View>  
             )
     }
