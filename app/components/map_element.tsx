@@ -249,7 +249,7 @@ const tray_styles = StyleSheet.create({
     estimated_ride_time_text: {
         fontSize: 20,
         fontWeight: 900,
-        color: "White"
+        color: "white"
     },
     checkout_button: {
         display: "flex",
